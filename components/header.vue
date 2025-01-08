@@ -1,5 +1,5 @@
 <template>
-    <header class="bg-blue-500 text-white p-4">
+    <header class="bg-primary text-white p-4">
         <div class="flex justify-between items-center">
             <h1 class="text-2xl font-bold">Fund Manager</h1>
             <nav>

@@ -7,7 +7,7 @@
       <div
         v-for="fund in fundData.results"
         :key="fund.id"
-        class="bg-white shadow-md rounded-lg p-4"
+        class="bg-primaryLight shadow-md rounded-lg p-4"
       >
         <h2 class="text-xl font-bold mb-2">{{ fund.scheme_name }}</h2>
         <p><strong>Scheme Code:</strong> {{ fund.scheme_code }}</p>

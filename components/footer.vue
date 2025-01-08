@@ -1,5 +1,5 @@
 <template>
-    <footer class="bg-gray-800 text-white py-4">
+    <footer class="bg-primaryDark text-white py-4">
         <div class="container mx-auto text-center">
             <p>&copy; 2025 Fund Manager. All rights reserved.</p>
             <div class="mt-2">
