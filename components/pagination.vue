@@ -30,52 +30,50 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from "vue";
-const props = defineProps({
-  totalPages: {
-    type: Number,
-    required: true,
-  },
-  currentPage: {
-    type: Number,
-    required: true,
-  },
-});
 
-const emit = defineEmits(["update:currentPage"]);
-const pages = ref([]);
+interface Props {
+    totalPages: number;
+    currentPage: number;
+}
+
+const props = defineProps<Props>();
+
+const emit = defineEmits<{
+    (e: "update:currentPage", value: number): void;
+}>();
+
+const pages = ref<(number | string)[]>([]);
 
 function prevPage() {
-  if (props.currentPage > 1) {
-    emit("update:currentPage", props.currentPage - 1);
-  }
+    if (props.currentPage > 1) {
+        emit("update:currentPage", props.currentPage - 1);
+    }
 }
 
 function nextPage() {
-  if (props.currentPage < props.totalPages) {
-    emit("update:currentPage", props.currentPage + 1);
-  }
+    if (props.currentPage < props.totalPages) {
+        emit("update:currentPage", props.currentPage + 1);
+    }
 }
 
-function goToPage(page) {
-    // advanced pagination logic
+function goToPage(page: number | string) {
     if (page === "...") {
         return;
     }
-    emit("update:currentPage", page);
-
+    emit("update:currentPage", page as number);
 }
 
 onMounted(() => {
-  if (props.totalPages < 10) {
-    pages.value = Array.from({ length: props.totalPages }, (_, i) => i + 1);
-  } else {
-    pages.value = [
-      ...Array.from({ length: 3 }, (_, i) => i + 1),
-      "...",
-      ...Array.from({ length: 3 }, (_, i) => props.totalPages - 2 + i),
-    ];
-  }
+    if (props.totalPages < 10) {
+        pages.value = Array.from({ length: props.totalPages }, (_, i) => i + 1);
+    } else {
+        pages.value = [
+            ...Array.from({ length: 3 }, (_, i) => i + 1),
+            "...",
+            ...Array.from({ length: 3 }, (_, i) => props.totalPages - 2 + i),
+        ];
+    }
 });
 </script>

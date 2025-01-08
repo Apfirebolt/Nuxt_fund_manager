@@ -21,15 +21,20 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { reactive } from 'vue';
 
-const form = reactive({
+interface Form {
+    email: string;
+    password: string;
+}
+
+const form = reactive<Form>({
     email: '',
     password: ''
 });
 
-const submitForm = () => {
+const submitForm = (): void => {
     console.log('Form submitted:', form);
     // Add your form submission logic here
 };

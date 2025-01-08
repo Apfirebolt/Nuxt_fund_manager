@@ -25,10 +25,16 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { reactive } from 'vue';
 
-const form = reactive({
+interface Form {
+    name: string;
+    email: string;
+    password: string;
+}
+
+const form = reactive<Form>({
     name: '',
     email: '',
     password: ''
@@ -39,7 +45,3 @@ const submitForm = () => {
     // Add your form submission logic here
 };
 </script>
-
-<style scoped>
-/* Add any additional styles here */
-</style>
