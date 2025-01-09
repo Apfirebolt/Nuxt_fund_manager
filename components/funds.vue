@@ -3,6 +3,9 @@
     <loader />
   </div>
   <div v-else>
+    <p class="text-xl bg-white text-primaryDark px-2 py-3 my-3">
+      {{ message }}
+    </p>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
       <div
         v-for="fund in fundData.results"
@@ -24,6 +27,20 @@
         <p><strong>Net Asset Value:</strong> {{ fund.net_asset_value }}</p>
         <p><strong>Scheme Category:</strong> {{ fund.scheme_category }}</p>
         <p><strong>Scheme Type:</strong> {{ fund.scheme_type }}</p>
+        <div class="flex justify-between mt-4">
+          <button
+            @click="saveFund(fund)"
+            class="bg-primaryDark text-neutral-100 px-4 py-2 rounded-lg"
+          >
+            Save
+          </button>
+          <button
+            @click="removeFund(fund)"
+            class="bg-danger text-neutral-100 px-4 py-2 rounded-lg"
+          >
+            Remove
+          </button>
+        </div>
       </div>
     </div>
     <pagination
@@ -59,6 +76,7 @@ interface FundData {
 const fundData = ref<FundData>({ count: 0, results: [] });
 const isLoading = ref<boolean>(false);
 const currentPage = ref<number>(1);
+const message = ref<string>("");
 
 // write a function to get api data from api/funds
 const getFunds = async (): Promise<void> => {
@@ -85,6 +103,35 @@ const getFunds = async (): Promise<void> => {
 const updateCurrentPage = (page: number): void => {
   currentPage.value = page;
   getFunds();
+};
+
+// save fund to local storage
+const saveFund = async (fund: Fund): Promise<void> => {
+  const savedFunds = localStorage.getItem("savedFunds");
+  if (savedFunds) {
+    const funds = JSON.parse(savedFunds);
+    funds.push(fund);
+    localStorage.setItem("savedFunds", JSON.stringify(funds));
+    message.value = "Fund saved successfully";
+    setTimeout(() => {
+      message.value = "";
+    }, 3000);
+  } else {
+    localStorage.setItem("savedFunds", JSON.stringify([fund]));
+  }
+};
+
+const removeFund = (fund: Fund): void => {
+  const savedFunds = localStorage.getItem("savedFunds");
+  if (savedFunds) {
+    const funds = JSON.parse(savedFunds);
+    const updatedFunds = funds.filter((f: Fund) => f.id !== fund.id);
+    localStorage.setItem("savedFunds", JSON.stringify(updatedFunds));
+    message.value = "Fund removed successfully";
+    setTimeout(() => {
+      message.value = "";
+    }, 3000);
+  }
 };
 
 onMounted(() => {
