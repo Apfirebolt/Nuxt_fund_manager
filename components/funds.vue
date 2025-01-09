@@ -3,7 +3,7 @@
     <loader />
   </div>
   <div v-else>
-    <p class="text-xl bg-white text-primaryDark px-2 py-3 my-3">
+    <p v-if="message.length" class="text-xl bg-white text-primaryDark px-2 py-3 my-3">
       {{ message }}
     </p>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
