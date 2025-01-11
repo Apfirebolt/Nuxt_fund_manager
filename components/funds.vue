@@ -11,7 +11,7 @@
       <div
         v-for="fund in fundData.results"
         :key="fund.id"
-        class="bg-primaryLight text-neutral-100 shadow-md rounded-lg p-4"
+        class="bg-primaryLight text-gray-700 shadow-md rounded-lg p-4"
       >
         <h2 class="text-xl font-bold mb-2">{{ fund.scheme_name }}</h2>
         <p><strong>Scheme Code:</strong> {{ fund.scheme_code }}</p>
@@ -38,7 +38,7 @@
           <button
             v-if="checkIfFundIsSaved(fund)"
             @click="removeFund(fund)"
-            class="bg-danger text-neutral-100 px-4 py-2 rounded-lg"
+            class="bg-secondary text-neutral-100 px-4 py-2 rounded-lg"
           >
             Remove
           </button>

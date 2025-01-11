@@ -14,4 +14,15 @@
     </div>
   </div>
 </template>
-<script setup></script>
+
+<script setup>
+definePageMeta({
+  title: 'About Us - Nuxt Fund Manager',
+  meta: [
+    {
+      name: 'description',
+      content: 'Learn more about Nuxt Fund Manager, our mission, values, and team. Discover how we are committed to providing the best fund management services.'
+    }
+  ]
+});
+</script>

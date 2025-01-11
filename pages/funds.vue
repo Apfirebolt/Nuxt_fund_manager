@@ -9,3 +9,15 @@
         </ClientOnly>
     </div>
 </template>
+
+<script setup>
+definePageMeta({
+  title: 'Funds - Nuxt Fund Manager',
+  meta: [
+    {
+      name: 'description',
+      content: 'Learn more about Nuxt Fund Manager, our mission, values, and team. Discover how we are committed to providing the best fund management services.'
+    }
+  ]
+});
+</script>
