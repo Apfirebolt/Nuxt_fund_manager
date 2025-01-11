@@ -30,7 +30,7 @@
           <div class="flex justify-between mt-4">
             <button
               @click="removeFund(fund)"
-              class="bg-danger text-neutral-100 px-4 py-2 rounded-lg"
+              class="bg-secondary text-neutral-100 px-4 py-2 rounded-lg hover:bg-primaryDark transition-colors duration-300 ease-linear"
             >
               Remove
             </button>

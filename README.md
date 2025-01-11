@@ -1,75 +1,22 @@
-# Nuxt Minimal Starter
+![Nuxt](https://img.shields.io/badge/Nuxt-002E3B?style=for-the-badge&logo=nuxtdotjs&logoColor=#00DC82)
+![Vue](https://img.shields.io/badge/Vue-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-38B2AC?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![API Integration](https://img.shields.io/badge/API%20Integration-FF6F61?style=for-the-badge)
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+# Nuxt Portfolio Manager
 
-## Setup
+This is a simple Portfolio Manager application which displays list of funds from this API 
+`https://softgenie.com/api/funds`.
 
-Make sure to install dependencies:
+This application also provides option to save Fund in local storage. It does not involve any complex back-end but there are plans to add 
+full-fledged back-end API with user management and authentication in future.
 
-```bash
-# npm
-npm install
+# Screenshots
 
-# pnpm
-pnpm install
+![Screenshot 1](screenshots/1.png)
+![Screenshot 2](screenshots/2.png)
 
-# yarn
-yarn install
+# License
 
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
