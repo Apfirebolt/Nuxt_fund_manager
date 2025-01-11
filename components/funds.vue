@@ -6,6 +6,7 @@
     <p v-if="message.length" class="text-xl bg-white text-primaryDark px-2 py-3 my-3">
       {{ message }}
     </p>
+    
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
       <div
         v-for="fund in fundData.results"
@@ -35,6 +36,7 @@
             Save
           </button>
           <button
+            v-if="checkIfFundIsSaved(fund)"
             @click="removeFund(fund)"
             class="bg-danger text-neutral-100 px-4 py-2 rounded-lg"
           >
@@ -77,6 +79,7 @@ const fundData = ref<FundData>({ count: 0, results: [] });
 const isLoading = ref<boolean>(false);
 const currentPage = ref<number>(1);
 const message = ref<string>("");
+const savedFunds = ref<Fund[]>([]);
 
 // write a function to get api data from api/funds
 const getFunds = async (): Promise<void> => {
@@ -119,6 +122,8 @@ const saveFund = async (fund: Fund): Promise<void> => {
   } else {
     localStorage.setItem("savedFunds", JSON.stringify([fund]));
   }
+  loadSavedFunds();
+  getFunds();
 };
 
 const removeFund = (fund: Fund): void => {
@@ -132,9 +137,24 @@ const removeFund = (fund: Fund): void => {
       message.value = "";
     }, 3000);
   }
+  loadSavedFunds();
+  getFunds();
+};
+
+// load saved funds from local storage
+const loadSavedFunds = (): void => {
+  const funds = localStorage.getItem("savedFunds");
+  if (funds) {
+    savedFunds.value = JSON.parse(funds);
+  }
+};
+
+const checkIfFundIsSaved = (fund: Fund): boolean => {
+  return savedFunds.value.some((f: Fund) => f.id === fund.id);
 };
 
 onMounted(() => {
   getFunds();
+  loadSavedFunds();
 });
 </script>

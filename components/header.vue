@@ -8,6 +8,7 @@
                 <li><NuxtLink to="/about" class="px-3 py-2 rounded hover:bg-blue-700 transition-colors">About</NuxtLink></li>
                 <li><NuxtLink to="/login" class="px-3 py-2 rounded hover:bg-blue-700 transition-colors">Login</NuxtLink></li>
                 <li><NuxtLink to="/register" class="px-3 py-2 rounded hover:bg-blue-700 transition-colors">Register</NuxtLink></li>
+                <li><NuxtLink to="/funds" class="px-3 py-2 rounded hover:bg-blue-700 transition-colors">Funds</NuxtLink></li>
             </ul>
             <button @click="toggleMenu" class="md:hidden">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -29,6 +30,9 @@
                 </li>
                 <li class="py-2 text-center">
                     <NuxtLink to="/register" class="block hover:underline transition-transform transform hover:scale-105">Register</NuxtLink>
+                </li>
+                <li class="py-2 text-center">
+                    <NuxtLink to="/funds" class="block hover:underline transition-transform transform hover:scale-105">Funds</NuxtLink>
                 </li>
             </ul>
         </transition>
