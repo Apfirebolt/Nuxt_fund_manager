@@ -22,10 +22,11 @@ interface ApiResponse {
 
 export default defineEventHandler(async (event): Promise<ApiResponse> => {
     const query = getQuery(event)
+    const search = query.search || ''
     const page = query.page || 1
 
     try {
-        const response: ApiResponse = await $fetch<ApiResponse>(`https://softgenie.org/api/funds?page=${page}`)
+        const response: ApiResponse = await $fetch<ApiResponse>(`https://softgenie.org/api/funds?page=${page}&search=${search}`)
         // console.log('Fetched funds:', response.count)
         return response
     } catch (error) {

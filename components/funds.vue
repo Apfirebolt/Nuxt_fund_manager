@@ -6,6 +6,31 @@
     <p v-if="message.length" class="text-xl bg-white text-primaryDark px-2 py-3 my-3">
       {{ message }}
     </p>
+
+    <div class="relative my-3 z-40">
+      <input
+      type="text"
+      v-model="searchQuery"
+      placeholder="Search funds..."
+      class="w-full px-4 py-2 border rounded-lg text-red-800"
+      />
+      <dropdown-loader v-if="isDropdownLoading" />
+      <transition name="fade">
+      <ul
+        v-if="fundDataDropdown && searchQuery.length > 3 && !isDropdownLoading"
+        class="absolute z-10 w-full bg-white border rounded-lg mt-1 max-h-60 overflow-y-auto"
+      >
+        <li
+        v-for="fund in fundDataDropdown.results"
+        :key="fund.id"
+        @click="clickFund(fund)"
+        class="px-4 py-2 cursor-pointer hover:bg-gray-200 text-gray-700"
+        >
+        {{ fund.scheme_name }}
+        </li>
+      </ul>
+      </transition>
+    </div>
     
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
       <div
@@ -54,7 +79,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed, watch } from "vue";
 import axios from "axios";
 
 interface Fund {
@@ -76,28 +101,53 @@ interface FundData {
 }
 
 const fundData = ref<FundData>({ count: 0, results: [] });
+const fundDataDropdown = ref<FundData>({ count: 0, results: [] });
 const isLoading = ref<boolean>(false);
+const isDropdownLoading = ref<boolean>(false);
 const currentPage = ref<number>(1);
 const message = ref<string>("");
 const savedFunds = ref<Fund[]>([]);
+const searchQuery = ref<string>("");
+
+const debouncedSearch = ref<number | undefined>(undefined);
+
+watch(searchQuery, () => {
+  if (searchQuery.value.length > 3) {
+    clearTimeout(debouncedSearch.value);
+    debouncedSearch.value = setTimeout(() => {
+      getFunds(searchQuery.value);
+    }, 1000);
+  }
+});
 
 // write a function to get api data from api/funds
-const getFunds = async (): Promise<void> => {
+const getFunds = async (searchText: string = ""): Promise<void> => {
   try {
-    isLoading.value = true;
+    if (searchText) {
+      isDropdownLoading.value = true;
+    } else {
+      isLoading.value = true;
+    }
     const response = await axios.get("/api/funds", {
       params: {
         page: currentPage.value,
+        search: searchText,
       },
     });
     if (response.status !== 200) {
       throw new Error("Failed to fetch data");
     } else {
       isLoading.value = false;
-      fundData.value = response.data;
+      if (searchText) {
+        isDropdownLoading.value = false;
+        fundDataDropdown.value = response.data;
+      } else {
+        fundData.value = response.data;
+      }
     }
   } catch (error) {
     isLoading.value = false;
+    isDropdownLoading.value = false;
     console.error(error);
   }
 };
@@ -153,8 +203,22 @@ const checkIfFundIsSaved = (fund: Fund): boolean => {
   return savedFunds.value.some((f: Fund) => f.id === fund.id);
 };
 
+const clickFund = (fund: Fund): void => {
+  searchQuery.value = fund.scheme_name;
+  fundDataDropdown.value = { count: 0, results: [] };
+};
+
 onMounted(() => {
   getFunds();
   loadSavedFunds();
 });
 </script>
+
+<style scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0;
+}
+</style>
