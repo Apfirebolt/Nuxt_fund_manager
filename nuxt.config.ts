@@ -5,8 +5,14 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css', '~/assets/css/style.css'],
   postcss: {
     plugins: {
-      tailwindcss: {},
+      '@tailwindcss/postcss': {},
       autoprefixer: {},
     },
   },
+  nitro: {
+    prerender: {
+      enabled: true,
+      include: ['index', 'about'],
+    }
+  }
 })
